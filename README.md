@@ -1,4 +1,4 @@
-<h1 align="center"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="35vh" width="35vh" style="display: block; margin: auto;" />Welcome to go-and-sqlite 👋</h1>
+<h1 align="center"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="35vh" width="35vh" style="display: block; margin: auto;" /> Welcome to go-and-sqlite 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://opensource.org/osd" target="_blank">
