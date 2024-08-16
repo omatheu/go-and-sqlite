@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
 	"github.com/omatheu/go-and-sqlite/database"
-	_ "github.com/omatheu/go-and-sqlite/database"
 	_ "github.com/omatheu/go-and-sqlite/docs"
 	"github.com/omatheu/go-and-sqlite/handlers"
 	"github.com/omatheu/go-and-sqlite/models"
@@ -25,7 +24,7 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host localhost:8080
-// @BasePath /api/v1
+// @BasePath /
 func main() {
 	db, err := database.ConnectToSQLite()
 	if err != nil {

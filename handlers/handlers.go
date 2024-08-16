@@ -8,6 +8,11 @@ import (
 	"gorm.io/gorm"
 )
 
+// HTTPError represents an error response
+type HTTPError struct {
+	Error string `json:"error"`
+}
+
 // CreateUser godoc
 // @Summary Create a new user
 // @Description Create a new user with the input payload
@@ -16,17 +21,17 @@ import (
 // @Produce json
 // @Param user body models.User true "User"
 // @Success 200 {object} models.User
-// @Failure 400 {object} fiber.Map
-// @Failure 500 {object} fiber.Map
+// @Failure 400 {object} HTTPError
+// @Failure 500 {object} HTTPError
 // @Router /users [post]
 func CreateUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var user models.User
 		if err := c.BodyParser(&user); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+			return c.Status(fiber.StatusBadRequest).JSON(HTTPError{Error: err.Error()})
 		}
 		if err := db.Create(&user).Error; err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+			return c.Status(fiber.StatusInternalServerError).JSON(HTTPError{Error: err.Error()})
 		}
 		return c.Status(fiber.StatusOK).JSON(user)
 	}
@@ -39,18 +44,18 @@ func CreateUser(db *gorm.DB) fiber.Handler {
 // @Produce json
 // @Param id path int true "User ID"
 // @Success 200 {object} models.User
-// @Failure 400 {object} fiber.Map
-// @Failure 404 {object} fiber.Map
+// @Failure 400 {object} HTTPError
+// @Failure 404 {object} HTTPError
 // @Router /users/{id} [get]
 func GetUserByID(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid user ID"})
+			return c.Status(fiber.StatusBadRequest).JSON(HTTPError{Error: "Invalid user ID"})
 		}
 		var user models.User
 		if err := db.First(&user, id).Error; err != nil {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+			return c.Status(fiber.StatusNotFound).JSON(HTTPError{Error: "User not found"})
 		}
 		return c.Status(fiber.StatusOK).JSON(user)
 	}
@@ -65,22 +70,22 @@ func GetUserByID(db *gorm.DB) fiber.Handler {
 // @Param id path int true "User ID"
 // @Param user body models.User true "User"
 // @Success 200 {object} models.User
-// @Failure 400 {object} fiber.Map
-// @Failure 500 {object} fiber.Map
+// @Failure 400 {object} HTTPError
+// @Failure 500 {object} HTTPError
 // @Router /users/{id} [put]
 func UpdateUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid user ID"})
+			return c.Status(fiber.StatusBadRequest).JSON(HTTPError{Error: "Invalid user ID"})
 		}
 		var user models.User
 		if err := c.BodyParser(&user); err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+			return c.Status(fiber.StatusBadRequest).JSON(HTTPError{Error: err.Error()})
 		}
 		user.ID = uint(id)
 		if err := db.Save(&user).Error; err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+			return c.Status(fiber.StatusInternalServerError).JSON(HTTPError{Error: err.Error()})
 		}
 		return c.Status(fiber.StatusOK).JSON(user)
 	}
@@ -92,19 +97,19 @@ func UpdateUser(db *gorm.DB) fiber.Handler {
 // @Tags users
 // @Produce json
 // @Param id path int true "User ID"
-// @Success 200 {object} fiber.Map
-// @Failure 400 {object} fiber.Map
-// @Failure 500 {object} fiber.Map
+// @Success 200 {object} HTTPError
+// @Failure 400 {object} HTTPError
+// @Failure 500 {object} HTTPError
 // @Router /users/{id} [delete]
 func DeleteUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid user ID"})
+			return c.Status(fiber.StatusBadRequest).JSON(HTTPError{Error: "Invalid user ID"})
 		}
 		if err := db.Delete(&models.User{}, id).Error; err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+			return c.Status(fiber.StatusInternalServerError).JSON(HTTPError{Error: err.Error()})
 		}
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "User deleted"})
+		return c.Status(fiber.StatusOK).JSON(HTTPError{Error: "User deleted"})
 	}
 }
