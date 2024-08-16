@@ -8,6 +8,17 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreateUser godoc
+// @Summary Create a new user
+// @Description Create a new user with the input payload
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body models.User true "User"
+// @Success 200 {object} models.User
+// @Failure 400 {object} fiber.Map
+// @Failure 500 {object} fiber.Map
+// @Router /users [post]
 func CreateUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var user models.User
@@ -21,6 +32,16 @@ func CreateUser(db *gorm.DB) fiber.Handler {
 	}
 }
 
+// GetUserByID godoc
+// @Summary Get a user by ID
+// @Description Get a user by ID
+// @Tags users
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} models.User
+// @Failure 400 {object} fiber.Map
+// @Failure 404 {object} fiber.Map
+// @Router /users/{id} [get]
 func GetUserByID(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
@@ -35,6 +56,18 @@ func GetUserByID(db *gorm.DB) fiber.Handler {
 	}
 }
 
+// UpdateUser godoc
+// @Summary Update a user by ID
+// @Description Update a user by ID with the input payload
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Param user body models.User true "User"
+// @Success 200 {object} models.User
+// @Failure 400 {object} fiber.Map
+// @Failure 500 {object} fiber.Map
+// @Router /users/{id} [put]
 func UpdateUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
@@ -53,6 +86,16 @@ func UpdateUser(db *gorm.DB) fiber.Handler {
 	}
 }
 
+// DeleteUser godoc
+// @Summary Delete a user by ID
+// @Description Delete a user by ID
+// @Tags users
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} fiber.Map
+// @Failure 400 {object} fiber.Map
+// @Failure 500 {object} fiber.Map
+// @Router /users/{id} [delete]
 func DeleteUser(db *gorm.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id, err := strconv.Atoi(c.Params("id"))
