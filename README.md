@@ -1,4 +1,4 @@
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="100vh" width="100vh"/> 
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" height="100vh" width="100vh" align="center"/> 
 <h1 align="center">Welcome to go-and-sqlite 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
