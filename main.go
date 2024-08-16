@@ -9,7 +9,7 @@ import (
 	_ "github.com/omatheu/go-and-sqlite/database"
 	_ "github.com/omatheu/go-and-sqlite/docs"
 	"github.com/omatheu/go-and-sqlite/handlers"
-	_ "github.com/omatheu/go-and-sqlite/handlers"
+	"github.com/omatheu/go-and-sqlite/models"
 )
 
 // @title Swagger Example API
@@ -40,7 +40,7 @@ func main() {
 	defer sqlDB.Close()
 
 	// Perform database migration
-	err = db.AutoMigrate(&handlers.User{})
+	err = db.AutoMigrate(&models.User{})
 	if err != nil {
 		log.Fatal(err)
 	}
